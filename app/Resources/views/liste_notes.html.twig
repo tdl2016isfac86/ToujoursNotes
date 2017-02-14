@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}{{ entete }}{% endblock %}
+
+{% block body %}
+	<h1>{{ entete }}</h1>
+
+	<div>{% for note in notes %}
+		{{ note.title }}<br>
+
+	{% endfor %}</div>
+<br>
+	<div>
+		{{ uneNote.title }} ({{ uneNote.id }})<br>
+		{{ uneNote.date|date('d M') }}<br>
+		{{ uneNote.content}}
+
+	</div>
+
+
+{% endblock %}

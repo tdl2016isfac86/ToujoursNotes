@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>ToujoursNote</h1>
+<form id="formAjout">
+    <input type="text" name="title"><br>
+    <textarea name="content" cols="40" rows="5"></textarea>
+    <input type="submit" value="Ajouter">
+</form>
+<form id="formEdit">
+    <input type="text" name="title"><br>
+    <textarea name="content" cols="40" rows="5"></textarea>
+    <input type="hidden" name="id" value="">
+    <button>Annuler</button>
+    <input type="submit" value="Modifier">
+</form>
+<div id="liste">
+        {% for note in notes %}
+            <div class="note" id="n{{ note.id }}">
+                <span><span class="title">{{ note.title }}</span></span>
+                <p>{{ note.content }}</p>
+        
+                <div>
+                <span class="date">{% if note.date %}{{ note.date|date('Y-m-d H:i:s') }}{% endif %}</span>
+                <span class="delete">del</span>
+                <span class="edit">edit</span>
+            </div>
+             </div>
+        {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+_index:
+    path:     /
+    defaults: { _controller: "NoteBundle:Note:index" }
+    methods:  GET
+
+_show:
+    path:     /{id}/show
+    defaults: { _controller: "NoteBundle:Note:show" }
+    methods:  GET
+
+_new:
+    path:     /new
+    defaults: { _controller: "NoteBundle:Note:new" }
+    methods:  [GET, POST]
+
+_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "NoteBundle:Note:edit" }
+    methods:  [GET, POST]
+
+_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "NoteBundle:Note:delete" }
+    methods:  DELETE
+
+_ajaxajout:
+    path:   /ajaxajout
+    defaults: { _controller: "NoteBundle:Note:ajaxAjout" }
+    methods: POST
+
+_ajaxsuppr:
+    path:   /ajaxSuppr
+    defaults: { _controller: "NoteBundle:Note:ajaxSuppr" }
+    methods: DELETE
+
+_ajaxupdate:
+    path:   /ajaxupdate
+    defaults: { _controller: "NoteBundle:Note:ajaxUpdate" }
+    methods: POST

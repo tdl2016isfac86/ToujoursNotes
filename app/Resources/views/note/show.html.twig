@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ note.title }}</h1>
+
+    {% if note.date %}Enregistrée le {{ note.date|date('d M Y à H:i') }}{% endif %}
+<div>{{ note.content }}</div>
+
+    <ul>
+        <li>
+            <a href="{{ path('_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('_edit', { 'id': note.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
