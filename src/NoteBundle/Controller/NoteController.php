@@ -22,9 +22,10 @@ class NoteController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $notes = $em->getRepository('NoteBundle:Note')->findBy(array(), array('sequence' => 'DESC'));
+        
 
         return $this->render('note/index.html.twig', array(
-            'notes' => array_reverse($notes),
+            'notes' => $notes,
         ));
     }
 
@@ -176,5 +177,42 @@ class NoteController extends Controller
         $em->flush();
 
         return new Response('ok');
+    }
+    
+    public function ajaxResequenceAction(Request $request) {
+        $post = $request->request->all();
+        $this->reorganiseSequence($post['depart'], $post['arrive']);   
+    
+        return new Response('ok');
+    }
+    
+    
+    
+
+    private function reorganiseSequence($depart, $arrive) {
+
+        $em = $this->getDoctrine()->getManager();
+
+        if($depart > $arrive) {
+            for($i=$arrive; $i<$depart;$i++) {
+                $notes = $em->getRepository('NoteBundle:Note')->findBy(array("sequence" => $i), array('sequence' => 'ASC'));
+                $note = $notes[0];
+                $note->setSequence($i+1);
+                $em->persist($note);
+            }
+        }
+        else {
+            for($i=$arrive; $i>$depart;$i=$i-1) {
+                $notes = $em->getRepository('NoteBundle:Note')->findBy(array("sequence" => $i), array('sequence' => 'ASC'));
+                $note = $notes[0];
+                $note->setSequence($i-1);
+                $em->persist($note);
+            }
+        }
+        $notes = $em->getRepository('NoteBundle:Note')->findBy(array("sequence" => $depart), array('sequence' => 'ASC'));
+        $note = $notes[0];
+        $note->setSequence($arrive);
+        $em->persist($note);
+        $em->flush();
     }
 }

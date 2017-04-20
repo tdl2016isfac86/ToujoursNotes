@@ -37,3 +37,9 @@ _ajaxupdate:
     path:   /ajaxupdate
     defaults: { _controller: "NoteBundle:Note:ajaxUpdate" }
     methods: POST
+
+_ajaxresequence:
+    path:   /ajaxresequence
+    defaults: { _controller: "NoteBundle:Note:ajaxResequence" }
+    methods: POST
+

@@ -7,13 +7,15 @@ body {
 }
 
 
-div.note {
+.note {
+    border-radius: 5px;
     width: 200px;
     margin: 7px;
     border: 1px solid #000;
     padding: 12px;
     float: left;
     word-wrap: break-word;
+    background-color: #fff;
 }
 
 .note .title {
@@ -39,3 +41,41 @@ div.note {
     margin:  0 3px;
     color: #3588cf;
 }
+
+/* ********
+    Sortables Notes
+******* */
+.title {
+    position: relative;
+    
+}
+
+
+
+.note-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-top: -8px;
+}
+.note-placeholder {
+    border: 1px dotted black;
+    margin: 7px;
+    padding: 12px;
+    width: 200px;
+    float: left;
+    background-color: #fff;
+    height: 50px;
+}
+
+#liste {
+	column-width: 215px;
+	column-gap: 15px;
+    width: 100%;
+}
+
+div#liste .note {
+    display: inline-block;
+  break-inside: avoid;
+}
+

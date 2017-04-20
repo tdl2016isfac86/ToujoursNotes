@@ -16,8 +16,8 @@
 </form>
 <div id="liste">
         {% for note in notes %}
-            <div class="note" id="n{{ note.id }}">
-                <span><span class="title">{{ note.title }}</span></span>
+            <div class="note" id="n{{ note.id }}" data-sequence="{{ note.sequence }}">
+                <span><span class="title">{{ note.sequence }} - {{ note.title }}</span></span>
                 <p>{{ note.content }}</p>
         
                 <div>

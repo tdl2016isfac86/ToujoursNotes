@@ -115,5 +115,76 @@ $(document).ready(function () {
 		$('#formAjout').toggle(true);
 		return false;
 	});
+	
+	$( function() {
+	    $( "#liste" ).sortable({
+	      connectWith: "#liste",
+	      handle: ".title",
+	      cancel: ".note-toggle",
+	      placeholder: "note-placeholder ui-corner-all",
+	      update: function(event, ui) {
+	      	//ui.item c'est l'élément qu'on vient de déplacer, donc mon point de départ
+	      	var depart = ui.item.attr('data-sequence');
+	      	var next = ui.item.next().attr('data-sequence');
+	      	var prev = ui.item.prev().attr('data-sequence');
+	      	if(depart < next) {
+	      		var arrive = next;
+	      	}
+	      	else {
+	      		var arrive = prev;
+	      	}
+      		$.ajax({
+				url: 'ajaxresequence',
+				method: 'POST',
+				data: {
+					depart: depart,
+					arrive: arrive,
+				},
+				success: function(data) {
+					var listItems = [];
+			        if(depart > arrive) {
+			            for(var i=arrive; i<depart;i=i+1) {
+		                // On va chercher l'element concerné et onl'ajoute au tableau
+			            	listItems.push($('[data-sequence='+i+']'));
+			            	console.log(i);
+			            }
+			            $('[data-sequence='+depart+']').attr('data-sequence',arrive);
+		                // On modifie son data-sequence (i+1)
+			            listItems.forEach(function(item) {
+		            		var ds = item.attr("data-sequence");
+		            		item.attr("data-sequence",parseInt(ds)+1)
+			            });
+			        }
+			        else {
+			            for(var i=arrive; i>depart;i=i-1) {
+		                // On va chercher l'element concerné et onl'ajoute au tableau
+			            	listItems.push($('[data-sequence='+i+']'));
+			            	console.log(arrive, depart, i);
+			            }
+			            $('[data-sequence='+depart+']').attr('data-sequence',arrive);
+			            // On modifie son data-sequence (i-1)
+			            listItems.forEach(function(item) {
+		            		var ds = item.attr("data-sequence");
+		            		item.attr("data-sequence",parseInt(ds)-1)
+			            });
+			        }
+					console.log(listItems);
+				}
+			});
+	    }
+	});
+	 
+	    $( ".note" )
+	      .addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+	      .find( ".title" )
+	        .addClass( "ui-widget-header ui-corner-all" )
+	        .parent().prepend( "<span class='ui-icon ui-icon-minusthick note-toggle'></span>");
+	 
+	    $( ".note-toggle" ).on( "click", function() {
+	      var icon = $( this );
+	      icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
+	      icon.closest( ".note" ).find( ".title" ).toggle();
+	    });
+	});
 });
 
